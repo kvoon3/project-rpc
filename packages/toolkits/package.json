@@ -1,8 +1,7 @@
 {
-  "name": "pkg-placeholder",
+  "name": "toolkits",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.6.2",
   "description": "_description_",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -52,6 +51,7 @@
     "vite": "catalog:cli",
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
+    "ws": "catalog:cli",
     "yaml": "catalog:testing"
   },
   "simple-git-hooks": {

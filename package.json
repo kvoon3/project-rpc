@@ -1,18 +1,30 @@
 {
-  "name": "project-rpc",
+  "name": "vite-dep-force-reinstall-demo",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.10.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.10.0",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "dev": "nr -C packages/app dev",
+    "build": "nr -C packages/toolkits build",
+    "stub": "nr -C packages/toolkits dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "dependencies": {
+    "@antfu/eslint-config": "catalog:cli",
+    "@types/ws": "catalog:types"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:cli",
+    "@antfu/ni": "catalog:cli",
+    "@antfu/nip": "catalog:cli",
+    "@types/node": "catalog:types",
     "birpc": "catalog:utils",
-    "esno": "catalog:cli",
-    "@types/node": "catalog:types"
+    "eslint": "catalog:cli",
+    "esno": "catalog:cli"
   }
 }

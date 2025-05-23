@@ -1,15 +1,46 @@
+/* eslint-disable no-console */
 import { fileURLToPath } from 'node:url'
-import { createServer } from 'vite'
+import { exec } from 'tinyexec'
+import { createServer, ViteDevServer } from 'vite'
+import { WebSocketServer } from 'ws'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
-const server = await createServer({
-  // 任何合法的用户配置选项，加上 `mode` 和 `configFile`
-  configFile: false,
-  root: __dirname,
-})
+async function main() {
+  const server = await createServer({
+    configFile: './vite.config.ts',
+    root: __dirname,
+    clearScreen: false,
+  })
 
-await server.listen()
+  const viteDevServer = await server.listen()
 
-server.printUrls()
-server.bindCLIShortcuts({ print: true })
+  startForceReinstallWss(viteDevServer)
+
+  server.printUrls()
+  server.bindCLIShortcuts({ print: true })
+}
+
+function startForceReinstallWss(viteDevServer: ViteDevServer) {
+  const wss = new WebSocketServer({
+    port: 3021,
+  })
+
+  wss.on('connection', (ws) => {
+    ws.on('message', async (msg) => {
+      if (msg.toString() === 'build:done') {
+        await exec('nun', ['toolkits'])
+        await exec('ni', ['link:../toolkits'])
+        
+        viteDevServer.restart()
+      }
+    })
+  })
+
+  wss.on('listening', () => {
+    console.log('force reinstall websocket is ready.')
+  })
+
+}
+
+main()

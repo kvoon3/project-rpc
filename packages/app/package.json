@@ -1,8 +1,8 @@
 {
   "name": "app",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "esno ./dev-server.ts",
     "build": "vite build",
@@ -10,9 +10,14 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "catalog:types",
+    "esno": "catalog:cli",
+    "tinyexec": "catalog:utils",
     "typescript": "catalog:cli",
     "vite": "catalog:cli",
-    "esno": "catalog:cli",
-    "@types/node": "catalog:types"
+    "ws": "catalog:cli"
+  },
+  "dependencies": {
+    "toolkits": "link:../toolkits"
   }
 }

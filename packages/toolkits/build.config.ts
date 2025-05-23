@@ -1,4 +1,5 @@
 import { defineBuildConfig } from 'unbuild'
+import WebSocktet from 'ws'
 
 export default defineBuildConfig({
   entries: [
@@ -13,7 +14,25 @@ export default defineBuildConfig({
   },
   hooks: {
     'build:done': () => {
-      console.log('build done')
+      return new Promise((resolve, reject) => {
+        const ws = new WebSocktet('ws://localhost:3021')
+
+        const close = () => {
+          ws.close()
+          resolve(void 0)
+        }
+
+        ws.on('error', reject)
+
+        ws.on('open', () => {
+          ws.send('build:done', (err) => {
+            if (err)
+              reject(err)
+
+            close()
+          })
+        })
+      })
     },
   },
 })
